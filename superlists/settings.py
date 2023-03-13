@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-$l*od)t-4dh9mrx%ho@+cp@6l6a#sasmj(782!kia0(nho7y%l
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'tdd-superlists.herokuapp.com/'
+    'tdd-superlists.herokuapp.com'
 ]
 
 
