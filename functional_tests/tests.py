@@ -20,8 +20,8 @@ class NewVisitorTest(StaticLiveServerTestCase):
 
     def test_can_start_a_list_retrieve_it_later(self):
 
-        # self.browser.get(self.live_server_url)
-        self.browser.get('https://tdd-superlists.herokuapp.com')
+        self.browser.get(self.live_server_url)
+        # self.browser.get('https://tdd-superlists.herokuapp.com')
 
         self.assertIn("To-Do", self.browser.title)
         header_text = self.browser.find_element(By.TAG_NAME, 'h1').text
@@ -51,8 +51,8 @@ class NewVisitorTest(StaticLiveServerTestCase):
         # 新的User造訪
         self.browser.quit()
         self.browser = webdriver.Chrome()
-        # self.browser.get(self.live_server_url)
-        self.browser.get('https://tdd-superlists.herokuapp.com')
+        self.browser.get(self.live_server_url)
+        # self.browser.get('https://tdd-superlists.herokuapp.com')
 
         page_text = self.browser.find_element(By.TAG_NAME, 'body').text
         self.assertNotIn('Buy peacock feathers', page_text)
@@ -72,8 +72,8 @@ class NewVisitorTest(StaticLiveServerTestCase):
 
     def test_layout_and_styling(self):
 
-        # self.browser.get(self.live_server_url)
-        self.browser.get('https://tdd-superlists.herokuapp.com')
+        self.browser.get(self.live_server_url)
+        # self.browser.get('https://tdd-superlists.herokuapp.com')
 
         self.browser.set_window_size(1027, 768)
 
