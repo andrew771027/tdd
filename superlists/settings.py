@@ -86,13 +86,12 @@ DATABASES = {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     # },
-    'default': {
+    'default':
         dj_database_url.config(
             default='postgres://add:CB8RyYY6oxRfH2KFhebbV0aEZCZ4Yp05@dpg-cg9irgceooghng107m3g-a/tdd_hepl',
             conn_max_age=600
         )
     }
-}
 
 
 # Password validation
