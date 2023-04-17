@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 import os
+import dj_database_url
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,6 +28,7 @@ SECRET_KEY = 'django-insecure-$l*od)t-4dh9mrx%ho@+cp@6l6a#sasmj(782!kia0(nho7y%l
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    '127.0.0.1',
     'tdd-superlists.onrender.com',
     'tdd-superlists.herokuapp.com'
 ]
@@ -80,9 +82,15 @@ WSGI_APPLICATION = 'superlists.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # },
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        dj_database_url.config(
+            default='postgres://add:CB8RyYY6oxRfH2KFhebbV0aEZCZ4Yp05@dpg-cg9irgceooghng107m3g-a/tdd_hepl',
+            conn_max_age=600
+        )
     }
 }
 
