@@ -12,17 +12,19 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 import os
 import dj_database_url
+from dotenv import load_dotenv
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv(BASE_DIR / '.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$l*od)t-4dh9mrx%ho@+cp@6l6a#sasmj(782!kia0(nho7y%l'
+SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -82,16 +84,15 @@ WSGI_APPLICATION = 'superlists.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # },
-    'default':
-        dj_database_url.config(
-            default='postgres://add:CB8RyYY6oxRfH2KFhebbV0aEZCZ4Yp05@dpg-cg9irgceooghng107m3g-a.oregon-postgres.render.com/tdd_hepl',
-            conn_max_age=600
-        )
+    'default': {
+        'ENGINE': str(os.getenv('DB_ENGINE'), 'django.db.backends.sqlite3'),            # PostgreSQL
+        'NAME': str(os.getenv('DB_NAME'), os.path.join(BASE_DIR, 'db.sqlite3')),        # 資料庫名稱
+        'USER': str(os.getenv('DB_USER'), ''),                                          # 資料庫帳號
+        'PASSWORD': str(os.getenv('DB_PASSWORD'), ''),                                  # 資料庫密碼
+        'HOST': str(os.getenv('DB_HOST'), ''),                                          # Server(伺服器)位址
+        'PORT': str(os.getenv('DB_PORT'), '')                                           # PostgreSQL Port號
     }
+}
 
 
 # Password validation
