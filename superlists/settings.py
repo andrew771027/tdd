@@ -85,12 +85,12 @@ WSGI_APPLICATION = 'superlists.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': str(os.getenv('DB_ENGINE'), 'django.db.backends.sqlite3'),            # PostgreSQL
-        'NAME': str(os.getenv('DB_NAME'), os.path.join(BASE_DIR, 'db.sqlite3')),        # 資料庫名稱
-        'USER': str(os.getenv('DB_USER'), ''),                                          # 資料庫帳號
-        'PASSWORD': str(os.getenv('DB_PASSWORD'), ''),                                  # 資料庫密碼
-        'HOST': str(os.getenv('DB_HOST'), ''),                                          # Server(伺服器)位址
-        'PORT': str(os.getenv('DB_PORT'), '')                                           # PostgreSQL Port號
+        'ENGINE': str(os.getenv('DB_ENGINE','django.db.backends.sqlite3')),            # PostgreSQL
+        'NAME': str(os.getenv('DB_NAME', os.path.join(BASE_DIR, 'db.sqlite3'))),        # 資料庫名稱
+        'USER': str(os.getenv('DB_USER', '')),                                          # 資料庫帳號
+        'PASSWORD': str(os.getenv('DB_PASSWORD', '')),                                  # 資料庫密碼
+        'HOST': str(os.getenv('DB_HOST', '')),                                          # Server(伺服器)位址
+        'PORT': str(os.getenv('DB_PORT', ''))                                           # PostgreSQL Port號
     }
 }
 
