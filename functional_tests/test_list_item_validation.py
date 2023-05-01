@@ -26,7 +26,7 @@ class ItemValidationTest(FunctionalTest):
 
         # 他在清單網頁上看到類似的警告
         self.check_for_row_in_list_table('1: Buy milk')
-        error = self.browser.find_element(By.CSS, '.has-error')
+        error = self.browser.find_element(By.CSS_SELECTOR, '.has-error')
         self.assertEqual(error.text, "You can't have an empty list item.")
 
         # 她可以填入一些文字來修正它
