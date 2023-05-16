@@ -9,8 +9,8 @@ class LayoutAndStylingTest(FunctionalTest):
 
         self.browser.set_window_size(1027, 768)
 
-        inputbox = self.browser.find_element(By.ID, 'id_new_item')
-        self.assertAlmostEqual(inputbox.location['x'] + inputbox.size['width'] / 2,
+        input_box = self.get_item_input_box()
+        self.assertAlmostEqual(input_box.location['x'] + input_box.size['width'] / 2,
                                512,
                                delta=5)
 
