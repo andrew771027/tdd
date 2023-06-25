@@ -12,11 +12,72 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://code.jquery.com/qunit/qunit-2.19.4.js"
         integrity="sha256-ZFjYNVAOk8Ozw+xXXCfNuf87Knngp3BVxFk3lBLD/Uc=" crossorigin="anonymous"></script>
+    <script src="https://login.persona.org/include.js"></script>
     <script src="/static/list.js"></script>
+    <script src="/static/accounts/accounts.js"></script>
+    <script>
+        $(document).ready(function () {
+            var user = "{{user.email}}" || null;
+            var token = "{{ csrf_token }}";
+            var urls = {
+                login: "TODO",
+                logout: "TODO"
+            }
+            superLists.accounts.initialize(navigator, user, token, urls);
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            var loginLink = document.getElementById('login');
+            if (loginLink) {
+                loginLink.onclick = function () { navigator.id.request(); };
+            }
+
+            var logoutLink = document.getElementById('logout');
+            if (logoutLink) {
+                logoutLink.onclick = function () { navigator.id.logout(); };
+            }
+
+
+            var currentUser = '{{ user.email }}' || null;
+            var csrf_token = '{{ csrf_token }}';
+            console.log(currentUser);
+
+            var urls = {
+                login: "{% url 'login' %}",
+                logout: "{% url 'logout' %}"
+            };
+
+            navigator.id.watch({
+                loggedInput: currentUser,
+                onlogin: function (assertion) {
+                    $.post(urls.login, { assertion: assertion, csrfmiddlewaretoken: csrf_token })
+                        .done(function () { window.location.reload(); })
+                        .fail(function () { navigator.id.logout(); });
+                },
+                onlogout: function () {
+                    $.post(urls.logout)
+                        .always(function () { window.location.reload(); });
+                }
+            });
+        });
+    </script>
 </head>
 
 <body>
     <div class="container">
+        <div class="navbar">
+            {% if user.email %}
+            <p>Logged in as {{ user.email }}</p>
+            <p><a id="id_logout" href="{% url logout %}">Sign out</a></p>
+            {% else %}
+            <nav class="navbar navbar-default" role="navigation">
+                <a class='navbar-brand' href="/">Superlists</a>
+                <a class='btn navar-btn navbar-right' href="#" id="id_login">Sign in</a>
+            </nav>
+            {% endif%}
+            <p>User: {{user}}</p>
+        </div>
         <div class="row">
             <div class="col-md-12 col-md-offset-3 jumbortron">
                 <div class="text-center">

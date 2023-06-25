@@ -47,7 +47,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'lists',
+    'accounts',
 ]
+
+AUTH_USER_MODEL = 'accounts.ListUser'
+AUTHENTICATION_BACKENDS = {
+    'accounts.authentication.PersonaAuthenticationBackend',
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -86,12 +92,18 @@ WSGI_APPLICATION = 'superlists.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': str(os.getenv('DB_ENGINE','django.db.backends.sqlite3')),            # PostgreSQL
-        'NAME': str(os.getenv('DB_NAME', os.path.join(BASE_DIR, 'db.sqlite3'))),        # 資料庫名稱
-        'USER': str(os.getenv('DB_USER', '')),                                          # 資料庫帳號
-        'PASSWORD': str(os.getenv('DB_PASSWORD', '')),                                  # 資料庫密碼
-        'HOST': str(os.getenv('DB_HOST', '')),                                          # Server(伺服器)位址
-        'PORT': str(os.getenv('DB_PORT', ''))                                           # PostgreSQL Port號
+        # PostgreSQL
+        'ENGINE': str(os.getenv('DB_ENGINE', 'django.db.backends.sqlite3')),
+        # 資料庫名稱
+        'NAME': str(os.getenv('DB_NAME', os.path.join(BASE_DIR, 'db.sqlite3'))),
+        # 資料庫帳號
+        'USER': str(os.getenv('DB_USER', '')),
+        # 資料庫密碼
+        'PASSWORD': str(os.getenv('DB_PASSWORD', '')),
+        # Server(伺服器)位址
+        'HOST': str(os.getenv('DB_HOST', '')),
+        # PostgreSQL Port號
+        'PORT': str(os.getenv('DB_PORT', ''))
     }
 }
 
@@ -131,9 +143,30 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(ROOT_DIR, 'static')
+STATIC_ROOT = os.paths.abspath(os.path.join(ROOT_DIR, '../static'))
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'superlists', 'static')
+)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# LOG
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+        },
+    },
+    'root': {'level': 'INFO'}
+}
