@@ -20,7 +20,7 @@
             var user = "{{user.email}}" || null;
             var token = "{{ csrf_token }}";
             var urls = {
-                login: "TODO",
+                login: "{% url 'persona_login %}",
                 logout: "TODO"
             }
             superLists.accounts.initialize(navigator, user, token, urls);
@@ -66,14 +66,13 @@
 
 <body>
     <div class="container">
-        <div class="navbar">
+        <div class="navbar navbar-defualt" role="navigation">
+            <a class='navbar-brand' href="/">Superlists</a>
             {% if user.email %}
-            <p>Logged in as {{ user.email }}</p>
-            <p><a id="id_logout" href="{% url logout %}">Sign out</a></p>
+            <a class="btn navar-btn navbar-right" id="id_logout" href="{%url 'logout'%}">Logout out</a>
+            <span class="navbar-text navbar-right">Logged in as {{user.email}}</span>
             {% else %}
-            <nav class="navbar navbar-default" role="navigation">
-                <a class='navbar-brand' href="/">Superlists</a>
-                <a class='btn navar-btn navbar-right' href="#" id="id_login">Sign in</a>
+            <a class='btn navar-btn navbar-right' href="#" id="id_login">Login in</a>
             </nav>
             {% endif%}
             <p>User: {{user}}</p>

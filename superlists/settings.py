@@ -30,8 +30,10 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+DOMAIN = 'localhost'
+
 ALLOWED_HOSTS = [
-    '127.0.0.1',
+    DOMAIN,
     'tdd-superlists.onrender.com',
     'tdd-superlists.herokuapp.com'
 ]
@@ -48,9 +50,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'lists',
     'accounts',
+    'functional_tests',
 ]
 
-AUTH_USER_MODEL = 'accounts.ListUser'
+AUTH_USER_MODEL = 'accounts.User'
 AUTHENTICATION_BACKENDS = {
     'accounts.authentication.PersonaAuthenticationBackend',
 }
@@ -167,6 +170,12 @@ LOGGING = {
         'django': {
             'handlers': ['console'],
         },
+        'accounts': {
+            'handlers': ['console'],
+        },
+        'lists': {
+            'handlers': ['console']
+        }
     },
     'root': {'level': 'INFO'}
 }
