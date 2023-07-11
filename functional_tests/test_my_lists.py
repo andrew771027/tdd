@@ -31,7 +31,8 @@ class MyListsTest(FunctionalTest):
 
         self.browser.find_element(By.LINK_TEXT, 'My lists').click()
         self.browser.find_element(By.LINK_TEXT, 'Reticulate splines').click()
-        self.assertEqual(self.browser.current_url, first_list_url)
+        self.wait_for(lambda: self.assertEqual(
+            self.browser.current_url, first_list_url))
 
         self.browser.get(self.server_url)
         self.get_item_input_box().send_keys('Click cows\n')
@@ -39,7 +40,8 @@ class MyListsTest(FunctionalTest):
 
         self.browser.find_element(By.LINK_TEXT, 'My lists').click()
         self.browser.find_element(By.LINK_TEXT, 'Click cows').click()
-        self.assertEqual(self.browser.current_url, second_list_url)
+        self.wait_for(lambda: self.assertEqual(
+            self.browser.current_url, second_list_url))
 
         self.browser.find_element(By.ID, 'id_logout').click()
         self.assertEqual(self.browser.find_element(
