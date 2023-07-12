@@ -11,6 +11,8 @@ from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from unittest import skip
 from selenium.webdriver.support.ui import WebDriverWait
 from .server_tools import reset_database
+from .server_tools import create_session_on_server
+from .management.commands.create_session import create_pre_authenticated_session
 
 DEFAULT_WAIT = 5
 SCREEN_DUMP_LOCATION = os.path.join(
@@ -107,3 +109,16 @@ class FunctionalTest(StaticLiveServerTestCase):
             except (AssertionError, WebDriverException):
                 time.sleep(0.1)
         return function_with_assertion()
+
+    def create_pre_authenticated_session(self, email):
+        if self.against_staging:
+            session_key = create_session_on_server(self.server_host, email)
+        else:
+            session_key = create_pre_authenticated_session(email)
+
+        self.browser.get(self.server_url + "/404_no_such_url/")
+        self.browser.add_cookie(dict(
+            name=settings.SESSION_COOKIE_NAME,
+            value=session_key,
+            path='/'
+        ))
